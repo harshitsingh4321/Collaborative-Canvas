@@ -1,3 +1,6 @@
+// server/server.js
+require('dotenv').config();
+
 const express = require('express');
 const http = require('http');
 const socketIO = require('socket.io');
@@ -6,16 +9,24 @@ const path = require('path');
 
 const app = express();
 const server = http.createServer(app);
+
 const io = socketIO(server, {
     cors: {
-        origin: ["*"], 
-        methods: ["GET", "POST"]
+        origin: process.env.CORS_ORIGIN || '*',
+        methods: ['GET', 'POST']
     }
 });
 
-app.use(cors());
-app.use(express.static(path.join(__dirname, '../client')));
+// Basic middleware
+app.use(cors({
+    origin: process.env.CORS_ORIGIN || '*'
+}));
+app.use(express.json());
 
+// Serve client files from server/public
+app.use(express.static(path.join(__dirname, 'public')));
+
+// Rooms data structure
 const rooms = new Map();
 
 function createRoom(roomId, roomName, capacity) {
@@ -26,7 +37,7 @@ function createRoom(roomId, roomName, capacity) {
             capacity,
             users: new Map(),
             drawingHistory: [],
-            userRedoStacks: new Map(), 
+            userRedoStacks: new Map(),
             createdAt: new Date()
         });
         console.log(`Room created: ${roomName} (${roomId})`);
@@ -323,12 +334,13 @@ io.on('connection', (socket) => {
     });
 });
 
+// Serve index and canvas (from server/public)
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, '../client/index.html'));
+    res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
 app.get('/canvas', (req, res) => {
-    res.sendFile(path.join(__dirname, '../client/canvas.html'));
+    res.sendFile(path.join(__dirname, 'public', 'canvas.html'));
 });
 
 app.get('/health', (req, res) => {
@@ -354,7 +366,6 @@ server.listen(PORT, () => {
     console.log(`
    Collaborative Canvas Server
 Server running on port ${PORT}
-URL: http://localhost:${PORT}
 Stats: http://localhost:${PORT}/stats
     `);
 });
