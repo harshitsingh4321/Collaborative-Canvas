@@ -1,941 +1,429 @@
 # Real-Time Collaborative Drawing Canvas 🎨
 
-A multi-user drawing application where teams can draw together in real-time with instant synchronization, cursor tracking, and global undo/redo functionality.
+A modern, fast, and beautiful real-time collaborative whiteboard where multiple users can draw together with live synchronization, cursor tracking, and global undo/redo functionality.
 
-[![Live Demo](https://img.shields.io/badge/demo-live-brightgreen)](https://real-time-collaborative-drawing-canvas-ni5j.onrender.com)
-[![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
-[![Node Version](https://img.shields.io/badge/node-%3E%3D14.0.0-brightgreen)](https://nodejs.org)
+👉 **Live Demo**: https://collaborative-canvas-y4d9.onrender.com  
+👉 **Tech Stack**: HTML5 Canvas, JavaScript, Node.js, Express, Socket.IO
 
 ---
 
-## 📋 Table of Contents
+## 📌 Table of Contents
 
 - [Features](#features)
 - [Live Demo](#live-demo)
+- [Screenshots](#screenshots)
 - [Quick Start](#quick-start)
 - [Project Structure](#project-structure)
 - [How It Works](#how-it-works)
-- [Technical Stack](#technical-stack)
-- [Testing with Multiple Users](#testing-with-multiple-users)
-- [API Documentation](#api-documentation)
-- [Known Limitations](#known-limitations)
-- [Performance Benchmarks](#performance-benchmarks)
+- [API Reference](#api-reference)
 - [Deployment](#deployment)
 - [Troubleshooting](#troubleshooting)
 - [Contributing](#contributing)
-- [Time Spent](#time-spent)
+- [License](#license)
 
 ---
 
+<a name="features"></a>
 ## ✨ Features
 
-### Core Drawing Capabilities
+### 🎨 Drawing Tools
+- **Brush** - Freehand drawing with smooth strokes
+- **Eraser** - Remove unwanted marks
+- **Line** - Draw straight lines
+- **Rectangle** - Create rectangular shapes
+- **Circle** - Draw perfect circles
+- **Color Picker** - Choose any color with live preview
+- **Adjustable Brush Size** - From 1px to 50px with slider control
 
-- 🖌️ **Multiple Drawing Tools**
-  - Brush with adjustable size (1-50px)
-  - Eraser with variable width
-  - Line tool for straight lines
-  - Rectangle tool (outlined)
-  - Circle tool (outlined)
+### ⚡ Real-Time Collaboration
+- Multi-user drawing with instant synchronization
+- Live cursor tracking with user names and colors
+- User join/leave notifications
+- Full canvas sync for new users joining mid-session
+- Room-based collaboration with unique room IDs
+- Configurable room capacity (2-20 users)
 
-- 🎨 **Rich Customization**
-  - Full color picker (16.7M colors)
-  - Real-time color preview
-  - Stroke width adjustment with live preview
-  - Visual tool indicators
+### ↩️ Advanced Undo & Redo
+- **Per-user undo/redo** - Each user can undo only their own strokes
+- Full history re-sync for all connected users
+- Atomic stroke operations (complete shapes/strokes)
+- Server-side history management
 
-### Real-Time Collaboration
+### 🎯 User Experience
+- **Modern UI Design** - Glassmorphism effects with gradient backgrounds
+- **Left Sidebar Layout** - Intuitive vertical tool organization
+- **Responsive Design** - Works on desktop, tablet, and mobile
+- **Touch Support** - Full touch drawing capabilities for mobile devices
+- **Fullscreen Mode** - Distraction-free drawing experience
+- **Download Canvas** - Save your artwork as PNG
 
-- 👥 **Multi-User Support**
-  - Up to 20 users per room (configurable)
-  - See who's online in real-time
-  - Color-coded user identification
-  - Join/leave notifications
-
-- 🖱️ **Live Cursor Tracking**
-  - See other users' cursor positions
-  - Labeled cursors with usernames
-  - Color-matched to user identity
-  - Smooth position updates
-
-- ⚡ **Instant Synchronization**
-  - Drawing appears in real-time (< 200ms latency)
-  - No lag between users
-  - Automatic conflict resolution
-  - Consistent state across all clients
-
-### Advanced Features
-
-- ↩️ **Global Undo/Redo**
-  - Each user can undo their own actions
-  - Undo affects all users' canvases simultaneously
-  - Per-user redo stacks (isolated)
-  - Keyboard shortcuts (Ctrl+Z / Ctrl+Y)
-
-- 💾 **Session Management**
-  - Automatic canvas history preservation
-  - New users see complete drawing history
-  - Persistent state during session
-  - Room-based isolation
-
-- 📱 **Mobile Support**
-  - Touch drawing support
-  - Responsive UI for all screen sizes
-  - Mobile-optimized controls
-  - Gesture-friendly interface
-
-### User Experience
-
-- 🚀 **Performance Optimized**
-  - Dual-layer canvas architecture
-  - Client-side prediction (0ms local feedback)
-  - Efficient WebSocket communication
-  - Smooth 60 FPS drawing
-
-- 🎭 **Beautiful Interface**
-  - Modern gradient backgrounds
-  - Smooth animations
-  - Intuitive toolbar layout
-  - Clean, professional design
+### 🔐 Room Management
+- Create private rooms with custom names
+- Join existing rooms with 12-character room IDs
+- Real-time user count display
+- Host privileges for room creators
+- Automatic room cleanup when empty
 
 ---
 
+<a name="live-demo"></a>
+## 🚀 Live Demo
 
+🔗 **https://collaborative-canvas-y4d9.onrender.com**
+
+Try opening it in multiple tabs or devices to see real-time synchronization in action!
 
 ### How to Test:
-
-1. **Open the demo** in your browser
-2. **Create a room**:
-   - Enter your name (e.g., "Alice")
-   - Enter room name (e.g., "Team Canvas")
-   - Click "Create Room"
-   - Copy the 12-character Room ID
-
-3. **Open second browser/device**:
-   - Open the same demo URL
-   - Click "Join Room"
-   - Enter your name (e.g., "Bob")
-   - Paste the Room ID
-   - Click "Join Room"
-
-4. **Start drawing together!**
-   - Draw on one browser, see it appear on the other
-   - Try undo/redo buttons
-   - Move your cursor to see live tracking
+1. Open the demo link
+2. Enter your name and create a room
+3. Share the generated Room ID with friends
+4. Draw together in real-time!
 
 ---
 
-## 🚀 Quick Start
+<a name="screenshots"></a>
+## 📸 Screenshots
+
+### Landing Page
+Modern gradient background with glassmorphism cards for creating or joining rooms.
+
+### Canvas Interface
+Clean left sidebar with all drawing tools, real-time user list, and spacious canvas area.
+
+### Live Collaboration
+Multiple users drawing simultaneously with visible cursors and instant synchronization.
+
+---
+
+<a name="quick-start"></a>
+## 🛠️ Quick Start (Local)
 
 ### Prerequisites
+- Node.js (v14 or higher)
+- npm or yarn
 
-- **Node.js** v14.0.0 or higher ([Download](https://nodejs.org))
-- **npm** v6.0.0 or higher (comes with Node.js)
-- Modern web browser (Chrome, Firefox, Safari, Edge)
-
-### Installation
-
-1. **Clone the repository**
-   ```bash
-   git clone <your-repo-url>
-   cd collaborative-canvas
-   ```
-
-2. **Install server dependencies**
-   ```bash
-   cd server
-   npm install
-   ```
-
-3. **Start the server**
-   ```bash
-   npm start
-   ```
-   
-   You should see:
-   ```
-   =============================
-   Collaborative Canvas Server
-   =============================
-   Server running on port 3000
-   URL: http://localhost:3000
-   Stats: http://localhost:3000/stats
-   ```
-
-4. **Open the application**
-   - Navigate to `http://localhost:3000` in your browser
-   - Create or join a room
-   - Start drawing!
-
-### Alternative: Development Mode
+### 1. Clone the repository
 
 ```bash
-cd server
-npm run dev  # Same as npm start, but with nodemon for auto-restart
+git clone https://github.com/harshitsingh4321/Collaborative-Canvas
+cd Collaborative-Canvas
 ```
+
+### 2. Install dependencies
+
+```bash
+npm install
+```
+
+### 3. Start the server
+
+```bash
+npm start
+```
+
+### 4. Open in browser
+
+```
+http://localhost:3000
+```
+
+That's it! The server will start on port 3000 by default.
 
 ---
 
+<a name="project-structure"></a>
 ## 📁 Project Structure
 
 ```
-collaborative-canvas/
+Collaborative-Canvas/
 │
-├── client/                      # Frontend application
-│   ├── index.html              # Landing page (room creation/joining)
-│   ├── canvas.html             # Main drawing interface
+├── client/                      # Frontend files
+│   ├── index.html              # Landing page (create/join room)
+│   ├── canvas.html             # Drawing canvas page
 │   ├── style.css               # Landing page styles
-│   ├── canvas-style.css        # Canvas page styles
-│   ├── main.js                 # Room management logic
-│   ├── canvas.js               # Drawing engine & event handlers
-│   └── websocket.js            # WebSocket connection manager
+│   ├── canvas-style.css        # Canvas page styles with left sidebar
+│   ├── main.js                 # Room creation/joining logic
+│   ├── canvas.js               # Canvas drawing logic
+│   └── websocket.js            # WebSocket client manager
 │
-├── server/                      # Backend application
-│   ├── server.js               # Express + Socket.IO server
-│   ├── package.json            # Dependencies & scripts
-│   └── package-lock.json       # Dependency lock file
+├── server/                      # Backend files
+│   └── server.js               # Express + Socket.IO server
 │
-├── ARCHITECTURE.md             # Technical architecture documentation
-├── README.md                   # This file
-└── .gitignore                  # Git ignore rules
+├── package.json                # Project dependencies
+├── package-lock.json           # Dependency lock file
+└── README.md                   # Documentation
 ```
-
-### File Responsibilities
-
-| File | Purpose | Lines of Code |
-|------|---------|---------------|
-| `client/canvas.js` | Canvas drawing logic, WebSocket events, user interactions | ~600 |
-| `client/websocket.js` | WebSocket connection management, reconnection logic | ~150 |
-| `client/main.js` | Room creation/joining, localStorage management | ~100 |
-| `server/server.js` | Express server, Socket.IO handlers, room management | ~400 |
-| `client/canvas-style.css` | Canvas interface styling, responsive design | ~500 |
-| `client/style.css` | Landing page styling, animations | ~400 |
-
-**Total**: ~2,150 lines of code
 
 ---
 
+<a name="how-it-works"></a>
 ## 🔧 How It Works
 
-### 1. Room Creation & Joining
+### 🖌️ Drawing Synchronization
 
-```
-User Opens Application
-         │
-         ▼
-┌─────────────────────┐
-│   Landing Page      │
-│  • Enter name       │
-│  • Create/Join room │
-└──────────┬──────────┘
-           │
-    ┌──────┴──────┐
-    │             │
-Create Room    Join Room
-    │             │
-    │             │ (Requires 12-char Room ID)
-    │             │
-    └──────┬──────┘
-           │
-           ▼
-   Store in localStorage
-   (userName, roomId, isHost)
-           │
-           ▼
-   Redirect to canvas.html
-           │
-           ▼
-   WebSocket Connection
-   socket.emit('join-room', {...})
-           │
-           ▼
-   Server validates & adds user
-           │
-           ▼
-   Send drawing history
-   + user list to client
-           │
-           ▼
-   User sees canvas with
-   all previous drawings
+1. **Local Drawing**: User draws on their canvas (instant feedback)
+2. **Stroke Broadcast**: Stroke data sent to server via WebSockets
+3. **Server Relay**: Server broadcasts to all users in the room
+4. **Remote Rendering**: Other clients draw the exact same stroke
+
+```javascript
+// Stroke data structure
+{
+  fromX, fromY,      // Start position
+  toX, toY,          // End position
+  color,             // Stroke color
+  width,             // Stroke width
+  tool,              // brush/eraser/line/rectangle/circle
+  strokeId,          // Unique identifier for undo/redo
+  userId             // User who created the stroke
+}
 ```
 
-### 2. Real-Time Drawing Synchronization
+### ↩️ Undo/Redo System
 
-```
-User A draws on canvas
-         │
-         ▼
-┌─────────────────────────────────┐
-│ 1. Local Canvas Update          │
-│    • ctx.lineTo(x, y)           │
-│    • Instant visual feedback    │
-└────────────┬────────────────────┘
-             │
-             ▼
-┌─────────────────────────────────┐
-│ 2. Collect Stroke Data          │
-│    {fromX, fromY, toX, toY,     │
-│     color, width, tool,         │
-│     strokeId}                   │
-└────────────┬────────────────────┘
-             │
-             ▼
-┌─────────────────────────────────┐
-│ 3. Send to Server               │
-│    socket.emit('draw', data)    │
-└────────────┬────────────────────┘
-             │
-             ▼
-┌─────────────────────────────────┐
-│ 4. Server Processing            │
-│    • Add to drawingHistory      │
-│    • Add userId, timestamp      │
-│    • Clear user's redo stack    │
-└────────────┬────────────────────┘
-             │
-             ▼
-┌─────────────────────────────────┐
-│ 5. Broadcast to Room            │
-│    socket.to(room).emit('draw') │
-│    (Excludes sender)            │
-└────────────┬────────────────────┘
-             │
-             ▼
-┌─────────────────────────────────┐
-│ 6. Other Clients Receive        │
-│    • User B, C, D get event     │
-│    • Draw on remoteCanvas       │
-│    • Latency: ~50-200ms         │
-└─────────────────────────────────┘
+- Each stroke group has a unique `strokeId`
+- Server maintains complete drawing history per room
+- Per-user redo stacks for undone strokes
+- On undo: Server removes user's last stroke group
+- Server broadcasts updated full history to all clients
+- Clients redraw entire canvas from history
 
-Result: All users see identical drawing
-```
+### 👆 Cursor Tracking
 
-### 3. Global Undo/Redo Mechanism
+- Client sends mouse/touch position every frame
+- Server broadcasts position to all other users
+- Each user sees colored cursors with usernames
+- Cursors are color-coded per user for easy identification
 
-**Challenge**: How do we let User A undo their own drawing without affecting User B's work?
+### 🏠 Room Management
 
-**Solution**: StrokeId-based grouping + Server-side history management
-
-```
-Drawing Phase:
-  • User draws line → All segments get same strokeId
-  • strokeId = "s-1699894532123-45678"
-  • Server stores all segments with userId + strokeId
-
-Undo Phase:
-  1. User clicks Undo button
-  2. Client: socket.emit('undo')
-  3. Server: Find last strokeId for this userId
-  4. Server: Remove ALL segments with that strokeId
-  5. Server: Store removed segments in user's redo stack
-  6. Server: Broadcast full history to ALL clients
-  7. All clients: Clear canvas + redraw from history
-  
-Redo Phase:
-  1. User clicks Redo button
-  2. Client: socket.emit('redo')
-  3. Server: Pop from user's redo stack
-  4. Server: Add strokes back to history
-  5. Server: Broadcast full history to ALL clients
-  6. All clients: Rebuild canvas
-
-Key Points:
-  ✅ Each user can only undo their own strokes
-  ✅ Undo affects all users' canvases (global sync)
-  ✅ Redo stacks are per-user (isolated)
-  ✅ No conflicts possible (server is authority)
-```
-
-### 4. Cursor Tracking
-
-```
-User moves mouse
-       │
-       ▼
-throttle (every mousemove)
-       │
-       ▼
-socket.emit('cursor-move', {x, y})
-       │
-       ▼
-Server receives + broadcasts
-socket.to(room).emit('cursor-move', {userId, x, y})
-       │
-       ▼
-Other clients receive
-       │
-       ▼
-Update cursor DOM element
-<div class="remote-cursor" style="left: x; top: y">
-  <div class="cursor-pointer"></div>
-  <div class="cursor-label">Username</div>
-</div>
-```
+- Room IDs: 12-character alphanumeric codes
+- Server stores: room name, capacity, users, drawing history
+- Automatic room deletion when last user leaves
+- New users receive full drawing history on join
 
 ---
 
-## 🛠️ Technical Stack
-
-### Frontend
-
-| Technology | Version | Purpose |
-|------------|---------|---------|
-| **Vanilla JavaScript** | ES6+ | Core application logic |
-| **HTML5 Canvas API** | Native | Drawing surface |
-| **CSS3** | Native | Styling & animations |
-| **Socket.IO Client** | 4.7.2 | WebSocket communication |
-| **localStorage** | Native | Session persistence |
-
-### Backend
-
-| Technology | Version | Purpose |
-|------------|---------|---------|
-| **Node.js** | v14+ | JavaScript runtime |
-| **Express.js** | 4.18.2 | HTTP server |
-| **Socket.IO** | 4.7.2 | WebSocket server |
-| **CORS** | 2.8.5 | Cross-origin support |
-
-### Architecture Patterns
-
-- **Client-Server**: Centralized state management
-- **Event-Driven**: WebSocket-based communication
-- **Optimistic UI**: Local-first updates
-- **Server Authority**: Conflict resolution
-
----
-
-## 🧪 Testing with Multiple Users
-
-### Method 1: Multiple Browser Tabs (Same Device)
-
-1. Open `http://localhost:3000` in Chrome
-2. Create a room (e.g., "Test Room")
-3. Copy the Room ID (e.g., "ABC123DEF456")
-4. Open new tab, navigate to `http://localhost:3000`
-5. Join the room using the Room ID
-6. Draw in one tab, see it appear in the other
-
-**Limitation**: Cannot test cursor tracking properly (same mouse)
-
-### Method 2: Multiple Browsers (Same Device)
-
-1. Open in **Chrome**: Create room
-2. Open in **Firefox**: Join room with ID
-3. Open in **Safari**: Join room with ID
-4. Draw in any browser, see synchronization
-
-**Benefit**: Different cursors, better testing
-
-### Method 3: Multiple Devices (Best)
-
-1. **Desktop**: Create room, get Room ID
-2. **Laptop**: Join room
-3. **Phone**: Join room (use mobile browser)
-4. **Tablet**: Join room
-
-**Benefit**: Real-world testing scenario
-
-### Method 4: Incognito/Private Windows
-
-1. Normal window: Create room
-2. Incognito window 1: Join room
-3. Incognito window 2: Join room
-4. Each has separate session
-
----
-
-## 📖 API Documentation
+<a name="api-reference"></a>
+## 📡 API Reference
 
 ### WebSocket Events
 
 #### Client → Server
 
-```javascript
-// Join a room
-socket.emit('join-room', {
-  roomId: "ABC123DEF456",      // 12-character unique ID
-  roomName: "Team Canvas",     // Display name
-  userName: "Alice",           // User's name
-  userColor: "#7e22ce",        // User's assigned color
-  capacity: 5,                 // Max users (if creating)
-  isHost: true                 // true if creating room
-});
-
-// Send drawing data
-socket.emit('draw', {
-  fromX: 100,                  // Start X coordinate
-  fromY: 50,                   // Start Y coordinate
-  toX: 105,                    // End X coordinate
-  toY: 55,                     // End Y coordinate
-  color: "#000000",            // Stroke color
-  width: 3,                    // Stroke width
-  tool: "brush",               // "brush" | "eraser"
-  strokeId: "s-123-456"        // Unique stroke identifier
-});
-
-// Send complete shape
-socket.emit('draw-line', {
-  fromX: 100,
-  fromY: 50,
-  toX: 200,
-  toY: 150,
-  color: "#ff0000",
-  width: 5,
-  tool: "line",                // "line" | "rectangle" | "circle"
-  strokeId: "s-789-012"
-});
-
-// Update cursor position
-socket.emit('cursor-move', {
-  x: 150,                      // X coordinate
-  y: 200                       // Y coordinate
-});
-
-// Request undo
-socket.emit('undo');
-
-// Request redo
-socket.emit('redo');
-
-// Clear entire canvas
-socket.emit('clear-canvas');
-
-// Health check
-socket.emit('ping');
-```
+| Event | Payload | Description |
+|-------|---------|-------------|
+| `join-room` | `{roomId, roomName, userName, userColor, capacity, isHost}` | Join or create a room |
+| `draw` | `{fromX, fromY, toX, toY, color, width, tool, strokeId}` | Send drawing stroke |
+| `draw-line` | `{fromX, fromY, toX, toY, color, width, tool, strokeId}` | Send shape (line/rect/circle) |
+| `cursor-move` | `{x, y}` | Update cursor position |
+| `undo` | `{}` | Undo last stroke group |
+| `redo` | `{}` | Redo last undone stroke |
+| `clear-canvas` | `{}` | Clear entire canvas |
 
 #### Server → Client
 
-```javascript
-// Receive user list on join
-socket.on('users-list', (data) => {
-  // data.users: [{id, name, color}, ...]
-});
-
-// User joined notification
-socket.on('user-joined', (data) => {
-  // data: {userId, userName, userColor, users}
-});
-
-// User left notification
-socket.on('user-left', (data) => {
-  // data: {userId, users}
-});
-
-// Receive remote drawing
-socket.on('draw', (data) => {
-  // data: {userId, userName, fromX, fromY, toX, toY, color, width, tool}
-});
-
-// Receive remote shape
-socket.on('draw-line', (data) => {
-  // Same as 'draw'
-});
-
-// Receive drawing history (on join)
-socket.on('drawing-history', (data) => {
-  // data.history: [...all previous strokes]
-});
-
-// Receive full history update (after undo/redo/clear)
-socket.on('full-history-update', (data) => {
-  // data.history: [...complete updated history]
-});
-
-// Receive remote cursor position
-socket.on('cursor-move', (data) => {
-  // data: {userId, userName, userColor, x, y}
-});
-
-// Room error (full, not found, etc.)
-socket.on('room-error', (data) => {
-  // data.message: error string
-});
-
-// Health check response
-socket.on('pong', () => {
-  // Server alive
-});
-```
-
-### HTTP Endpoints
-
-```javascript
-// Home page
-GET /
-// Returns: index.html
-
-// Canvas page
-GET /canvas
-// Returns: canvas.html
-
-// Health check
-GET /health
-// Returns: {"status": "Server is running"}
-
-// Server statistics
-GET /stats
-// Returns: {
-//   totalRooms: 5,
-//   totalUsers: 12,
-//   rooms: [
-//     {roomId: "ABC123", roomName: "Room 1", users: 3, capacity: 5},
-//     ...
-//   ]
-// }
-```
+| Event | Payload | Description |
+|-------|---------|-------------|
+| `users-list` | `{users: []}` | Current users in room |
+| `user-joined` | `{userId, userName, userColor}` | New user joined |
+| `user-left` | `{userId}` | User left room |
+| `draw` | `{userId, userName, fromX, fromY, toX, toY, color, width, tool}` | Remote drawing stroke |
+| `draw-line` | `{userId, userName, fromX, fromY, toX, toY, color, width, tool}` | Remote shape |
+| `cursor-move` | `{userId, userName, userColor, x, y}` | Remote cursor position |
+| `drawing-history` | `{history: []}` | Initial canvas state |
+| `full-history-update` | `{history: []}` | Complete history after undo/redo |
+| `room-error` | `{message}` | Room full or not found |
 
 ---
 
-## ⚠️ Known Limitations
+<a name="deployment"></a>
+## 🌐 Deployment
 
-### Current Version (v1.0.0)
+### Deploy to Render
 
-| Limitation | Impact | Workaround |
-|------------|--------|------------|
-| **No persistence** | Canvas lost on server restart | Export drawings before closing |
-| **No authentication** | Anyone with Room ID can join | Use hard-to-guess IDs, share privately |
-| **Memory-based storage** | Limited scalability | Cap at 1000 strokes per room |
-| **No rate limiting** | Potential DoS vulnerability | Trust-based system |
-| **No undo limit UI** | Users don't know when history ends | Try undo, see if it works |
-| **No mobile gestures** | Limited tablet support | Use stylus or finger |
-| **No zoom/pan** | Large canvases difficult | Fixed canvas size |
-| **No layers** | Cannot organize complex drawings | Use multiple rooms |
-| **No text tool** | Cannot add labels | Use external tool + screenshot |
-| **Single room per ID** | Cannot reuse Room IDs | Generate new ID each session |
+1. Push your code to GitHub
+2. Go to [Render Dashboard](https://dashboard.render.com/)
+3. Click "New +" → "Web Service"
+4. Connect your repository
 
-### Browser Compatibility
+#### Configuration
 
-| Browser | Desktop Support | Mobile Support | Notes |
-|---------|----------------|----------------|-------|
-| Chrome | ✅ Full | ✅ Full | Best performance |
-| Firefox | ✅ Full | ✅ Full | Good performance |
-| Safari | ✅ Full | ⚠️ Partial | Touch events limited |
-| Edge | ✅ Full | ✅ Full | Chromium-based |
-| IE11 | ❌ None | N/A | Not supported |
+| Field | Value |
+|-------|-------|
+| **Name** | `collaborative-canvas` |
+| **Root Directory** | `/` |
+| **Environment** | `Node` |
+| **Build Command** | `npm install` |
+| **Start Command** | `npm start` |
+| **Instance Type** | `Free` |
+| **Auto-Deploy** | `Yes` |
 
-### Network Requirements
-
-- **Minimum**: 0.5 Mbps upload/download
-- **Recommended**: 2 Mbps upload/download
-- **Latency**: < 500ms for smooth experience
-- **Firewall**: Must allow WebSocket connections (ports 80/443)
-
----
-
-## 📊 Performance Benchmarks
-
-### Test Environment
-- **Hardware**: Intel i7, 16GB RAM
-- **Network**: Local (0ms latency)
-- **Browser**: Chrome 119
-- **Node**: v18.17.0
-
-### Results
-
-| Metric | Value | Notes |
-|--------|-------|-------|
-| **Canvas Rebuild Time** | 45ms | 1000 strokes |
-| **Drawing Latency (local)** | 0ms | Client-side prediction |
-| **Drawing Latency (remote)** | 50-200ms | Network dependent |
-| **Cursor Update Rate** | 60 Hz | Throttled to 60 FPS |
-| **WebSocket Message Size** | ~150 bytes | Per stroke |
-| **Memory per Room** | ~500KB | With 1000 strokes |
-| **Max Users per Room** | 20 | Configurable |
-| **Concurrent Rooms** | 1000+ | Memory limited |
-
-### Load Testing (Artillery)
-
-```bash
-# Test with 100 concurrent users
-artillery quick --count 100 --num 50 http://localhost:3000
-
-Results:
-  Scenarios launched:  5000
-  Scenarios completed: 5000
-  Requests completed:  5000
-  Mean response time:  45ms
-  95th percentile:     120ms
-  Errors:              0
-```
-
----
-
-## 🚀 Deployment
-
-### Option 1: Render.com (Recommended)
-
-1. **Create account** at [render.com](https://render.com)
-
-2. **Create new Web Service**
-   - Repository: Your GitHub repo
-   - Branch: `main`
-   - Root Directory: `server`
-   - Environment: `Node`
-   - Build Command: `npm install`
-   - Start Command: `npm start`
-
-3. **Environment Variables**
-   - `PORT`: (Automatic)
-   - No other variables needed
-
-4. **Deploy**
-   - Render auto-deploys on push
-
-**Cost**: Free tier available
-
-### Option 2: Heroku
-
-```bash
-# Install Heroku CLI
-npm install -g heroku
-
-# Login
-heroku login
-
-# Create app
-heroku create collaborative-canvas
-
-# Push to Heroku
-git push heroku main
-
-# Open app
-heroku open
-```
-
-### Option 3: VPS (DigitalOcean, AWS, etc.)
-
-```bash
-# SSH into server
-ssh user@your-server.com
-
-# Install Node.js
-curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash -
-sudo apt-get install -y nodejs
-
-# Clone repo
-git clone <your-repo-url>
-cd collaborative-canvas/server
-
-# Install dependencies
-npm install
-
-# Install PM2 (process manager)
-sudo npm install -g pm2
-
-# Start server
-pm2 start server.js --name canvas
-
-# Save PM2 config
-pm2 save
-pm2 startup
-```
+5. Click "Create Web Service"
+6. Wait for deployment (2-3 minutes)
+7. Your app will be live at `https://your-app-name.onrender.com`
 
 ### Environment Variables
 
-```bash
-# .env file (if using dotenv)
-PORT=3000
-NODE_ENV=production
-```
+No environment variables are required for basic deployment. The server automatically uses:
+- `PORT`: Provided by Render (default: 3000 locally)
 
-### Production Checklist
+### Custom Domain (Optional)
 
-- [ ] Set `NODE_ENV=production`
-- [ ] Enable CORS with specific origins
-- [ ] Add rate limiting
-- [ ] Set up monitoring (PM2, New Relic)
-- [ ] Configure SSL certificate
-- [ ] Set up error logging (Winston, Sentry)
-- [ ] Add health check endpoint
-- [ ] Configure auto-restart on crash
+1. Go to Settings → Custom Domain
+2. Add your domain
+3. Update DNS records as instructed
 
 ---
 
+<a name="troubleshooting"></a>
 ## 🐛 Troubleshooting
 
-### Connection Issues
+### ❌ Cannot connect to server
 
-**Problem**: "Disconnected" status shown
-
-**Solutions**:
-1. Check if server is running (`npm start`)
-2. Verify WebSocket port not blocked by firewall
-3. Check browser console for errors
-4. Try refreshing the page
-5. Clear browser cache and localStorage
-
-### Drawing Not Syncing
-
-**Problem**: Other users don't see drawings
+**Symptoms**: "Connection Failed" message, drawings not syncing
 
 **Solutions**:
-1. Verify all users in same Room ID
-2. Check network connection
-3. Open browser console, look for WebSocket errors
-4. Ensure server has capacity (< 1000 strokes)
-5. Try rejoining the room
+- Ensure server is running (`npm start`)
+- Check browser console for WebSocket errors
+- Verify firewall isn't blocking WebSocket connections
+- Try a different browser
+- Check server URL in `canvas.js` (line 96)
 
-### Undo/Redo Not Working
+### ❌ Undo not working
 
-**Problem**: Undo button has no effect
+**Symptoms**: Undo button doesn't remove strokes
 
-**Solutions**:
-1. Ensure you're connected to server
-2. Only works on your own drawings
-3. Check if history is empty (nothing to undo)
-4. Try clicking multiple times (may have lag)
-5. Refresh page if stuck
-
-### Room Full Error
-
-**Problem**: Cannot join room
+**Possible Causes**:
+- Undo only affects **your own strokes**, not others'
+- Requires active WebSocket connection
+- Check if you have any strokes to undo
 
 **Solutions**:
-1. Check room capacity setting
-2. Wait for someone to leave
-3. Create new room
-4. Ask host to increase capacity
+- Verify connection status in bottom info bar
+- Check browser console for errors
+- Refresh page and reconnect
 
-### Performance Issues
+### ❌ Cursor not visible
 
-**Problem**: Laggy drawing
-
-**Solutions**:
-1. Reduce number of users in room
-2. Clear canvas history (Clear button)
-3. Close unnecessary browser tabs
-4. Check CPU usage
-5. Use wired internet connection
-
-### Mobile Issues
-
-**Problem**: Touch drawing not working
+**Symptoms**: Can't see other users' cursors
 
 **Solutions**:
-1. Ensure touchstart/touchmove events enabled
-2. Try different browser (Chrome recommended)
-3. Check if stylus mode enabled on device
-4. Refresh page
-5. Use landscape orientation
+- Cursors appear only when users move their mouse
+- User may have left the room (cursor removed)
+- Refresh the page
+- Check if user is actually in the same room
+
+### ❌ Drawing lag or delay
+
+**Symptoms**: Strokes appear slowly or choppy
+
+**Solutions**:
+- Check internet connection
+- Server may be under heavy load (free tier limitations)
+- Try drawing with smaller brush size
+- Reduce number of concurrent users
+
+### ❌ Canvas not clearing
+
+**Symptoms**: Clear button doesn't work
+
+**Solutions**:
+- Requires WebSocket connection
+- Check if you have permission (any user can clear)
+- Refresh page if issue persists
+
+### ❌ Room full error
+
+**Symptoms**: Cannot join room
+
+**Solutions**:
+- Room has reached maximum capacity
+- Ask host to increase room capacity when creating
+- Create a new room instead
 
 ---
 
+<a name="contributing"></a>
 ## 🤝 Contributing
 
-### Development Setup
+Contributions are welcome! Here's how you can help:
 
-1. **Fork the repository**
-2. **Clone your fork**
-   ```bash
-   git clone https://github.com/your-username/collaborative-canvas.git
-   cd collaborative-canvas
-   ```
+### Reporting Issues
 
-3. **Create feature branch**
-   ```bash
-   git checkout -b feature/amazing-feature
-   ```
+🔗 **Issues**: https://github.com/harshitsingh4321/Collaborative-Canvas/issues
 
-4. **Make changes**
-   - Follow existing code style
-   - Add comments for complex logic
-   - Test thoroughly
+Please include:
+- Browser and version
+- Steps to reproduce
+- Expected vs actual behavior
+- Screenshots if applicable
 
-5. **Commit changes**
-   ```bash
-   git commit -m "Add amazing feature"
-   ```
+### Submitting Pull Requests
 
-6. **Push to branch**
-   ```bash
-   git push origin feature/amazing-feature
-   ```
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
 
-7. **Open Pull Request**
-   - Describe changes
-   - Link related issues
-   - Add screenshots if UI changes
+### Development Guidelines
 
-### Code Style Guidelines
-
-- Use 4 spaces for indentation
-- Use camelCase for variables/functions
-- Add JSDoc comments for functions
-- Keep functions under 50 lines
-- Use meaningful variable names
-
-### Testing Checklist
-
-Before submitting PR:
-- [ ] Code runs without errors
-- [ ] Tested with multiple users
-- [ ] Tested on mobile devices
-- [ ] No console errors
-- [ ] Performance not degraded
-- [ ] Documentation updated
-- [ ] Git commit messages clear
+- Follow existing code style
+- Test on multiple browsers
+- Update documentation for new features
+- Keep commits atomic and well-described
 
 ---
 
-## ⏱️ Time Spent
-
-### Development Breakdown
-
-| Phase | Time | Description |
-|-------|------|-------------|
-| **Planning** | 4 hours | Architecture design, technology selection |
-| **Frontend UI** | 8 hours | Landing page, canvas interface, CSS styling |
-| **Canvas Logic** | 12 hours | Drawing engine, tools implementation, event handling |
-| **WebSocket Integration** | 8 hours | Client-server communication, connection management |
-| **Server Development** | 10 hours | Express setup, Socket.IO handlers, room management |
-| **Undo/Redo Feature** | 10 hours | StrokeId system, history management, testing |
-| **Cursor Tracking** | 4 hours | Real-time cursor updates, DOM manipulation |
-| **Testing & Debugging** | 8 hours | Multi-user testing, bug fixes, edge cases |
-| **Documentation** | 6 hours | README, ARCHITECTURE, code comments |
-| **Deployment** | 2 hours | Render.com setup, production testing |
-
-**Total**: ~72 hours (~9 working days)
-
-### Challenges Faced
-
-1. **Global Undo/Redo**: Most complex feature, required multiple iterations
-2. **Canvas Performance**: Optimizing redraw operations for 1000+ strokes
-3. **WebSocket Reconnection**: Handling network interruptions gracefully
-4. **Mobile Touch Events**: Different behavior across browsers
-5. **State Synchronization**: Ensuring consistency across all clients
-
----
-
+<a name="license"></a>
 ## 📝 License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the **MIT License** - free for personal and commercial use.
+
+```
+MIT License
+
+Copyright (c) 2024 Harshit Singh
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+```
 
 ---
 
 ## 🙏 Acknowledgments
 
-- **Socket.IO Team** for excellent WebSocket library
-- **MDN Web Docs** for Canvas API documentation
-- **Render.com** for free hosting
-- **Open Source Community** for inspiration
+- Built with [Socket.IO](https://socket.io/) for real-time communication
+- Inspired by collaborative tools like Figma and Miro
+- UI design inspired by modern glassmorphism trends
 
 ---
 
 ## 📧 Contact
 
-For questions, issues, or feature requests:
-
-- **GitHub Issues**: [Create an issue](https://github.com/your-username/collaborative-canvas/issues)
-- **Email**: your-email@example.com
+**Harshit Singh**
+- GitHub: [@harshitsingh4321](https://github.com/harshitsingh4321)
+- Project Link: [https://github.com/harshitsingh4321/Collaborative-Canvas](https://github.com/harshitsingh4321/Collaborative-Canvas)
 
 ---
 
-## 🌟 Star History
-
-If you find this project useful, please give it a ⭐ on GitHub!
+⭐ **Star this repo** if you find it useful!
 
 ---
 
