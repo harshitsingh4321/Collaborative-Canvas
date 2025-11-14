@@ -84,14 +84,45 @@ Try opening it in multiple tabs or devices to see real-time synchronization in a
 <a name="screenshots"></a>
 ## 📸 Screenshots
 
-### Landing Page
-Modern gradient background with glassmorphism cards for creating or joining rooms.
+### 🏠 Landing Page
+<p align="center">
+  <img src="screenshots/Landing_page.png" alt="Landing Page" width="800">
+</p>
 
-### Canvas Interface
-Clean left sidebar with all drawing tools, real-time user list, and spacious canvas area.
+Modern gradient background with glassmorphism effects. Users can create a new room or join an existing one with a room ID.
 
-### Live Collaboration
-Multiple users drawing simultaneously with visible cursors and instant synchronization.
+**Features shown:**
+- Clean, intuitive interface
+- Room creation with custom name and capacity
+- Room joining with 12-character ID
+- Responsive design with beautiful gradients
+
+### 🎨 Canvas Interface
+<p align="center">
+  <img src="screenshots/Canvas_interface.png" alt="Canvas Interface" width="800">
+</p>
+
+Full-featured drawing workspace with left sidebar containing all tools.
+
+**Features shown:**
+- Vertical toolbar with all drawing tools
+- Color picker with live preview
+- Brush size slider
+- Real-time user list
+- Room information display
+
+### 👥 Live Collaboration
+<p align="center">
+  <img src="screenshots/Live_collaboration.png" alt="Live Collaboration" width="800">
+</p>
+
+Multiple users drawing together with instant synchronization.
+
+**Features shown:**
+- Real-time drawing sync
+- Colored cursor tracking
+- User name labels
+- Multi-user canvas state
 
 ---
 
