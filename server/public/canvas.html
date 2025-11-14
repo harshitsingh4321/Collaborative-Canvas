@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Collaborative Canvas - Drawing</title>
+    <link rel="stylesheet" href="canvas-style.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="navbar-left">
+            <h2 class="room-title">Collaborative Canvas</h2>
+            <div class="room-info">
+                <span class="badge">Room: <strong id="roomIdDisplay">Loading...</strong></span>
+                <span class="badge">You: <strong id="userNameDisplay">Loading...</strong></span>
+            </div>
+        </div>
+        
+        <div class="navbar-center">
+            <span class="users-count"><strong id="usersCount">1</strong> user(s) online</span>
+            <div class="users-list" id="usersList"></div>
+        </div>
+
+        <div class="navbar-right">
+            <button class="btn-icon" onclick="toggleFullscreen()" title="Fullscreen">
+                Fullscreen
+            </button>
+            <button class="btn-icon danger" onclick="leaveRoom()" title="Leave Room">
+                Leave
+            </button>
+        </div>
+    </nav>
+
+    <div class="main-container">
+        <aside class="toolbar-sidebar">
+            <div class="tool-group">
+                <label>Tools</label>
+                <button class="tool-btn active" id="brushTool" onclick="selectTool('brush')" title="Brush">
+                    🖌️ Brush
+                </button>
+                <button class="tool-btn" id="eraserTool" onclick="selectTool('eraser')" title="Eraser">
+                    🧹 Eraser
+                </button>
+            </div>
+
+            <div class="tool-group">
+                <label>Shapes</label>
+                <button class="tool-btn" id="lineTool" onclick="selectTool('line')" title="Line">
+                    📏 Line
+                </button>
+                <button class="tool-btn" id="rectangleTool" onclick="selectTool('rectangle')" title="Rectangle">
+                    ⬜ Rectangle
+                </button>
+                <button class="tool-btn" id="circleTool" onclick="selectTool('circle')" title="Circle">
+                    ⭕ Circle
+                </button>
+            </div>
+
+            <div class="tool-group">
+                <label>Color</label>
+                <div class="color-picker-container">
+                    <input type="color" id="colorPicker" value="#000000" onchange="changeColor(this.value)">
+                    <span class="color-preview" id="colorPreview" style="background: #000000;"></span>
+                </div>
+            </div>
+
+            <div class="tool-group">
+                <label>Brush Size</label>
+                <input type="range" id="strokeWidth" min="1" max="50" value="3" 
+                       oninput="changeStrokeWidth(this.value)">
+                <span class="stroke-display" id="strokeDisplay">3px</span>
+            </div>
+
+            <div class="tool-group">
+                <label>Actions</label>
+                <button class="tool-btn" onclick="undoAction()" title="Undo">
+                    ↶ Undo
+                </button>
+                <button class="tool-btn" onclick="redoAction()" title="Redo">
+                    ↷ Redo
+                </button>
+                <button class="tool-btn danger-btn" onclick="clearCanvas()" title="Clear Canvas">
+                    🗑️ Clear
+                </button>
+            </div>
+
+            <div class="tool-group">
+                <button class="tool-btn download-btn" onclick="downloadCanvas()" title="Download Drawing">
+                    ⬇️ Download
+                </button>
+            </div>
+        </aside>
+
+        <div class="canvas-container">
+            <canvas id="canvas"></canvas>
+            
+            <canvas id="remoteCanvas" class="remote-canvas"></canvas>
+            
+            <div class="cursors-container" id="cursorsContainer"></div>
+        </div>
+    </div>
+
+    <div class="info-bar">
+        <div class="info-item">
+            <span>Position: <strong id="posDisplay">0, 0</strong></span>
+        </div>
+        <div class="info-item">
+            <span>Tool: <strong id="toolDisplay">Brush</strong></span>
+        </div>
+        <div class="info-item">
+            <span id="statusDisplay">Connected</span>
+        </div>
+    </div>
+
+    <script src="websocket.js"></script>
+    <script src="canvas.js"></script>
+</body>
+</html>
